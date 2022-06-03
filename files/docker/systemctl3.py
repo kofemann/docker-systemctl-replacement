@@ -5031,7 +5031,7 @@ class Systemctl:
         if not os.path.exists(late_dir):
             os.mkdir(late_dir)
         os.system("rm -rf %s/* %s/* %s/*" % (normal_dir, early_dir, late_dir))
-        os.system("for f in /lib/systemd/system-generators/*; do $f %s %s %s 2> /dev/null; done" % (
+        os.system("for f in /lib/systemd/system-generators/*; do $f %s %s %s 2> /dev/null; done" % (normal_dir, early_dir, late_dir))
         errors = 0
         for unit in self.match_units():
             try:
