@@ -5021,6 +5021,17 @@ class Systemctl:
             The returncode will tell the number of warnings,
             and it is over 100 if it can not continue even
             for the relaxed systemctl.py style of execution. """
+        normal_dir = "/run/systemd/generator"
+        early_dir = "/run/systemd/generator.early"
+        late_dir = "/run/systemd/generator.late"
+        if not os.path.exists(normal_dir):
+            os.mkdir(normal_dir)
+        if not os.path.exists(early_dir):
+            os.mkdir(early_dir)
+        if not os.path.exists(late_dir):
+            os.mkdir(late_dir)
+        os.system("rm -rf %s/* %s/* %s/*" % (normal_dir, early_dir, late_dir))
+        os.system("for f in /lib/systemd/system-generators/*; do $f %s %s %s 2> /dev/null; done" % (
         errors = 0
         for unit in self.match_units():
             try:
